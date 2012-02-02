@@ -1,4 +1,4 @@
-import replicates
+import experiments
 
 class Recipe(object):
 
@@ -9,7 +9,7 @@ class Recipe(object):
 
     def install(self):
         staging = self.options['staging']
-        replicates.main(staging)
+        experiments.main(staging)
         
     def update(self):
         return self.install()
