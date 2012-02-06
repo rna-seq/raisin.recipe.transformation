@@ -7,15 +7,17 @@ import files
 import genomes
 import profiles
 import experiments
+import read_length
+import view
 
 import csv
 
 SOURCE_PATH = "../extract/workspace/%s"
 
 def read_csv(file_name):
-    return csv.DictReader(open(file_name, 'r'), 
-                               delimiter='\t', 
-                               skipinitialspace=True)
+    return [line for line in csv.DictReader(open(file_name, 'r'), 
+                                            delimiter='\t', 
+                                            skipinitialspace=True)]
 
 class Recipe(object):
 
@@ -42,6 +44,8 @@ class Recipe(object):
         genomes.main(data, workspace)
         profiles.main(data, workspace)
         experiments.main(data, workspace)
-        
+        read_length.main(data, workspace)
+        view.main(data, workspace)
+
     def update(self):
         return self.install()
