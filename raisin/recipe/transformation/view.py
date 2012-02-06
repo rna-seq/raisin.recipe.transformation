@@ -1,21 +1,49 @@
 import os
 
-def view():
-    file_locations = accession['file_location'].split('\n')
-    if len(file_locations) == 1:
-        if accession['type'] in ['fasta', 'fastq']:
-            accession['view'] = "RawData"
-        elif accession['type'] == 'bam':
-            accession['view'] = "Alignments"
-    else:
-        if accession['type'] == 'fastq':
-            accession['view'] = '\n'.join(['FastqRd%d' % number for number in range(1, len(file_locations)+1)])
-        elif accession['type'] == 'fasta':
-            accession['view'] = '\n'.join(['FastqRd%d' % number for number in range(1, len(file_locations)+1)])
-        elif accession['type'] == 'bam':
-            accession['view'] = '\n'.join(['Alignment%d' % number for number in range(1, len(file_locations)+1)])
 
 def main(data, workspace):
-    pass
+
+    views = {}
     
-         
+    for file in data['files.csv']:
+    
+        key = (file['project_id'], file['accession_id'])
+        
+        if views.has_key(key):
+            views[key].append(file)
+        else:
+            views[key] = [file]
+
+    for key, files in views.items():
+        if len(files) == 1:
+            file = files[0]
+            if file['type'] in ['fasta', 'fastq']:
+                file['view'] = "RawData"
+            elif file['type'] == 'bam':
+                file['view'] = "Alignments"
+            else:
+                raise AttributeError
+        else:
+            number = 1
+            for file in files:
+                if file['type'] == 'fastq':
+                    file['view'] = 'FastqRd%d' % number
+                elif file['type'] == 'fasta':
+                    file['view'] = 'FastqRd%d' % number
+                elif file['type'] == 'bam':
+                    file['view'] = 'Alignment%d' % number
+                else:
+                    print file
+                    raise AttributeError
+                number += 1
+
+    view = open("workspace/view.csv", "w")
+    view.write("project_id\taccession_id\tfile_location\tview\n")
+
+    for key, files in views.items():
+        for file in files:
+            view.write("%s\t%s\t%s\t%s\n" % (file['project_id'],
+                                             file['accession_id'],
+                                             file['file_location'],
+                                             file['view']))
+    view.close()
