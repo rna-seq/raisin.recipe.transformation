@@ -10,4 +10,5 @@ raisin/recipe/transformation/genomes.py -text
 raisin/recipe/transformation/profiles.py -text
 raisin/recipe/transformation/read_length.py -text
 raisin/recipe/transformation/recipe.py -text
+raisin/recipe/transformation/view.py -text
 /setup.py -text
