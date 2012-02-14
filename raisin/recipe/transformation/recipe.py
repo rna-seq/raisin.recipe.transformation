@@ -1,4 +1,5 @@
 import os
+import glob
 import shutil
 
 import accessions
@@ -28,27 +29,20 @@ class Recipe(object):
         workspace = self.buildout['extract']['workspace']
         staging = self.options['staging']
         data = {}
-        for file in ['accessions.csv',
-                     'annotations.csv',
-                     'experiments.csv',
-                     'files.csv',
-                     'genomes.csv',
-                     'profiles.csv',
-                     'read_length.csv',
-                     'view.csv']:
-            source = os.path.join(workspace, file)
-            target = os.path.join(staging, file)
+        for source in [f for f in glob.glob(os.path.join(workspace, '*.csv'))]:
+            file_name = os.path.split(source)[-1]
+            target = os.path.join(staging, file_name)
             shutil.copyfile(source, target)
-            data[file] = read_csv(target)
+            data[file_name] = read_csv(target)
 
-        accessions.main(data, workspace)
-        annotations.main(data, workspace)
-        files.main(data, workspace)
-        genomes.main(data, workspace)
-        profiles.main(data, workspace)
-        experiments.main(data, workspace)
-        read_length.main(data, workspace)
-        view.main(data, workspace)
+        accessions.main(data, staging)
+        annotations.main(data, staging)
+        files.main(data, staging)
+        genomes.main(data, staging)
+        profiles.main(data, staging)
+        experiments.main(data, staging)
+        read_length.main(data, staging)
+        view.main(data, staging)
 
     def update(self):
         return self.install()
