@@ -1,19 +1,7 @@
 import os
 
 
-def main(data, workspace):
-
-    views = {}
-    
-    for file in data['files.csv']:
-    
-        key = (file['project_id'], file['accession_id'])
-        
-        if views.has_key(key):
-            views[key].append(file)
-        else:
-            views[key] = [file]
-
+def view_for_type(views):
     for key, files in views.items():
         if len(files) == 1:
             file = files[0]
@@ -29,12 +17,26 @@ def main(data, workspace):
                 if file['type'] == 'fastq':
                     file['view'] = 'FastqRd%d' % number
                 elif file['type'] == 'fasta':
-                    file['view'] = 'FastqRd%d' % number
+                    file['view'] = 'FastaRd%d' % number
                 elif file['type'] == 'bam':
                     file['view'] = 'Alignment%d' % number
                 else:
                     raise AttributeError
                 number += 1
+
+
+def main(data, workspace):
+
+    views = {}
+
+    for file in data['files.csv']:
+        key = (file['project_id'], file['accession_id'])
+        if key in views:
+            views[key].append(file)
+        else:
+            views[key] = [file]
+
+    view_for_type(views)
 
     path = os.path.join(workspace, "view.csv")
     view = open(path, "w")
