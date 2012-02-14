@@ -57,6 +57,8 @@ def read_length(accession):
         read_length = 76
     elif accession['readType'] == '1x76':
         read_length = 76
+    elif accession['readType'] == '1x70D':
+        read_length = 70
     else:
         print accession
         raise AttributeError
