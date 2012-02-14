@@ -46,7 +46,8 @@ def main(data, workspace):
         else:
             experiments[experiment_key] = [value]
 
-    file = open("workspace/experiments.csv", "w")
+    path = os.path.join(workspace, "experiments.csv")
+    file = open(path, "w")
     file.write("project_id\taccession_id\treplicate_id\n")
 
     for accessions in experiments.values():
