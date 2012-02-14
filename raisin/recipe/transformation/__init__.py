@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -*-
 """Recipe raisin.recipe.transformation"""
 
-import os
+import csv
 import glob
+import os
 import shutil
 
-import accessions
-import annotations
-import files
-import genomes
-import profiles
-import experiments
-import read_length
-import view
+from raisin.recipe.transformation import accessions
+from raisin.recipe.transformation import annotations
+from raisin.recipe.transformation import files
+from raisin.recipe.transformation import genomes
+from raisin.recipe.transformation import profiles
+from raisin.recipe.transformation import experiments
+from raisin.recipe.transformation import read_length
+from raisin.recipe.transformation import view
 
-import csv
 
 def read_csv(file_name):
-    return [line for line in csv.DictReader(open(file_name, 'r'), 
-                                            delimiter='\t', 
+    return [line for line in csv.DictReader(open(file_name, 'r'),
+                                            delimiter='\t',
                                             skipinitialspace=True)]
+
 
 class Recipe(object):
 
