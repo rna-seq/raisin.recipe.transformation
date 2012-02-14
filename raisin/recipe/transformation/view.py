@@ -33,11 +33,11 @@ def main(data, workspace):
                 elif file['type'] == 'bam':
                     file['view'] = 'Alignment%d' % number
                 else:
-                    print file
                     raise AttributeError
                 number += 1
 
-    view = open("workspace/view.csv", "w")
+    path = os.path.join(workspace, "view.csv")
+    view = open(path, "w")
     view.write("project_id\taccession_id\tfile_location\tview\n")
 
     for key, files in views.items():
