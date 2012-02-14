@@ -66,7 +66,8 @@ def main(data, workspace):
 
     views = {}
 
-    file = open("workspace/read_length.csv", "w")
+    path = os.path.join(workspace, "read_length.csv")
+    file = open(path, "w")
     file.write("project_id\taccession_id\tread_length\n")
     
     for accession in data['accessions.csv']:
