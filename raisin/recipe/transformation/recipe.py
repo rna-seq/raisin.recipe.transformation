@@ -12,8 +12,6 @@ import view
 
 import csv
 
-SOURCE_PATH = "../extract/workspace/%s"
-
 def read_csv(file_name):
     return [line for line in csv.DictReader(open(file_name, 'r'), 
                                             delimiter='\t', 
@@ -27,15 +25,20 @@ class Recipe(object):
         self.options = options
 
     def install(self):
-        workspace = self.options['workspace']
+        workspace = self.buildout['extract']['workspace']
+        staging = self.options['staging']
         data = {}
         for file in ['accessions.csv',
-                     'profiles.csv',
                      'annotations.csv',
+                     'experiments.csv',
                      'files.csv',
-                     'genomes.csv']:
-            target = os.path.join(workspace, file)
-            shutil.copyfile(SOURCE_PATH % file, target)
+                     'genomes.csv',
+                     'profiles.csv',
+                     'read_length.csv',
+                     'view.csv']:
+            source = os.path.join(workspace, file)
+            target = os.path.join(staging, file)
+            shutil.copyfile(source, target)
             data[file] = read_csv(target)
 
         accessions.main(data, workspace)
