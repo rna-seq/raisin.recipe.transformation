@@ -1,13 +1,1 @@
 * text=auto !eol
-raisin/__init__.py -text
-raisin/recipe/__init__.py -text
-raisin/recipe/transformation/__init__.py -text
-raisin/recipe/transformation/accessions.py -text
-raisin/recipe/transformation/annotations.py -text
-raisin/recipe/transformation/experiments.py -text
-raisin/recipe/transformation/files.py -text
-raisin/recipe/transformation/genomes.py -text
-raisin/recipe/transformation/profiles.py -text
-raisin/recipe/transformation/read_length.py -text
-raisin/recipe/transformation/view.py -text
-/setup.py -text
