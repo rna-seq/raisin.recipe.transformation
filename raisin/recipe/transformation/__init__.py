@@ -32,6 +32,9 @@ class Recipe(object):
     def install(self):
         workspace = self.buildout['extract']['workspace']
         staging = self.options['staging']
+        if not os.path.exists(staging):
+            os.makedirs(staging)
+
         data = {}
         for source in [f for f in glob.glob(os.path.join(workspace, '*.csv'))]:
             file_name = os.path.split(source)[-1]
