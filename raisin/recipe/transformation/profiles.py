@@ -50,8 +50,42 @@ def detect_missing_annotation(buildout, data):
             message.append("")
         raise AttributeError("\n".join(message))
 
+def detect_missing_genomes(buildout, data):
+    """
+    Go through all profiles and check whether the genome is defined
+    in genomes/db.cfg.
+    """
+    genome_files = []
+    for genome in data['genomes.csv']:
+        genome_files.append(genome['file_location'])
+        
+    missing = {}
+    for profile in data['profiles.csv']:
+        genome = profile['GENOMESEQ'] 
+        if not genome in genome_files:
+            if genome in missing:
+                missing[genome].append(profile)
+            else:
+                missing[genome] = [profile]
+            
+    if missing:
+        message = []
+        message.append("Add an genome for the following files in")
+        message.append("../../genomes/db.cfg:")
+        message.append("")
+        for genome, profiles in missing.items():
+            projects = set([p['project_id'] for p in profiles])
+            message.append("# projects: %s" % ', '.join(projects))
+            message.append("[genome]")
+            message.append("species =")
+            message.append("version =")
+            message.append("url =")
+            message.append("file_location = %s" % genome) 
+            message.append("")
+        raise AttributeError("\n".join(message))
 
 def main(buildout, data, workspace):
     detect_missing_project_user(buildout, data)
     detect_missing_annotation(buildout, data)
+    detect_missing_genomes(buildout, data)
     
