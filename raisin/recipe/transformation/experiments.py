@@ -1,15 +1,15 @@
 import os
 
-EXPRIMENT_PARAMETERS = ['project_id',
-                        'species',
-                        'cell',
-                        'readType',
-                        'type',
-                        'qualities',
-                        'dataType',
-                        'rnaExtract',
-                        'localization',
-                        'lab']
+EXPERIMENT_PARAMETERS = ['project_id',
+                         'species',
+                         'cell',
+                         'readType',
+                         'type',
+                         'qualities',
+                         'dataType',
+                         'rnaExtract',
+                         'localization',
+                         'lab']
 
 
 def main(data, staging):
@@ -32,7 +32,7 @@ def main(data, staging):
         project_id = accession['project_id']
 
         experiment_key = []
-        for parameter in EXPRIMENT_PARAMETERS:
+        for parameter in EXPERIMENT_PARAMETERS:
             experiment_key.append(accession[parameter])
         experiment_key = tuple(experiment_key)
 
