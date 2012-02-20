@@ -12,7 +12,7 @@ EXPRIMENT_PARAMETERS = ['project_id',
                         'lab']
 
 
-def main(data, workspace):
+def main(data, staging):
     """
     Assign each biological replicate in an experiment a unique replicate_id.
 
@@ -47,7 +47,7 @@ def main(data, workspace):
         else:
             experiments[experiment_key] = [value]
 
-    path = os.path.join(workspace, "experiments.csv")
+    path = os.path.join(staging, "experiments.csv")
     file = open(path, "w")
     file.write("project_id\taccession_id\treplicate_id\n")
 
