@@ -1,4 +1,4 @@
-def detect_missing_project_user(buildout, data)
+def detect_missing_project_user(buildout, data):
     """
     Go through all profiles and check whether there is a user defined for
     the project in the project_users section.
@@ -16,6 +16,42 @@ def detect_missing_project_user(buildout, data)
         raise AttributeError("Missing configuration\n%s" % "\n".join(message))
     
 
+def detect_missing_annotation(buildout, data):
+    """
+    Go through all profiles and check whether the annotation is defined
+    in annotations/db.cfg.
+    """
+    annotation_files = []
+    for annotation in data['annotations.csv']:
+        annotation_files.append(annotation['file_location'])
+        
+    missing = {}
+    for profile in data['profiles.csv']:
+        annotation = profile['ANNOTATION'] 
+        if not annotation in annotation_files:
+            if annotation in missing:
+                missing[annotation].append(profile)
+            else:
+                missing[annotation] = [profile]
+            
+    if missing:
+        message = []
+        message.append("Add an annotation for the following files in")
+        message.append("../../annotations/db.cfg:")
+        message.append("")
+        for annotation, profiles in missing.items():
+            projects = set([p['project_id'] for p in profiles])
+            message.append("# projects: %s" % ', '.join(projects))
+            message.append("[annotation]")
+            message.append("species =")
+            message.append("version =")
+            message.append("url =")
+            message.append("file_location = %s" % annotation) 
+            message.append("")
+        raise AttributeError("\n".join(message))
+
+
 def main(buildout, data, workspace):
     detect_missing_project_user(buildout, data)
-        
+    detect_missing_annotation(buildout, data)
+    
