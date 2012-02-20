@@ -1,4 +1,8 @@
-def main(buildout, data, workspace):
+def detect_missing_project_user(buildout, data)
+    """
+    Go through all profiles and check whether there is a user defined for
+    the project in the project_users section.
+    """
     missing = []
     for profile in data['profiles.csv']:
         if not profile['PROJECTID'] in buildout['project_users']:
@@ -11,3 +15,7 @@ def main(buildout, data, workspace):
             message.append("%s = anonymous" % project)
         raise AttributeError("Missing configuration\n%s" % "\n".join(message))
     
+
+def main(buildout, data, workspace):
+    detect_missing_project_user(buildout, data)
+        
