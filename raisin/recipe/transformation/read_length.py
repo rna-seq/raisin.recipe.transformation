@@ -20,8 +20,7 @@ def read_length(accession):
     if read_length.isdigit():
         return read_length
     else:
-        print accession
-        raise AttributeError
+        raise AttributeError("Read length parsing failed to detect the read length: %s" % read_length)
     return read_length
 
 

@@ -1,21 +1,3 @@
-def detect_missing_project_user(buildout, data):
-    """
-    Go through all profiles and check whether there is a user defined for
-    the project in the project_users section.
-    """
-    missing = []
-    for profile in data['profiles.csv']:
-        if not profile['PROJECTID'] in buildout['project_users']:
-            missing.append(profile['PROJECTID'])
-    if missing:
-        message = []
-        message.append("Add a user for the project in the project_users section:")
-        message.append("[project_users]")
-        for project in missing:
-            message.append("%s = anonymous" % project)
-        raise AttributeError("Missing configuration\n%s" % "\n".join(message))
-    
-
 def detect_missing_annotation(buildout, data):
     """
     Go through all profiles and check whether the annotation is defined
@@ -85,7 +67,6 @@ def detect_missing_genomes(buildout, data):
         raise AttributeError("\n".join(message))
 
 def main(buildout, data, workspace):
-    detect_missing_project_user(buildout, data)
     detect_missing_annotation(buildout, data)
     detect_missing_genomes(buildout, data)
     
