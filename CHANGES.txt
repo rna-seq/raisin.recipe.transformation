@@ -1,0 +1,2 @@
+- by default, project users is now anonymous, so code checking for this
+  setting has been removed
