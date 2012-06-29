@@ -45,7 +45,7 @@ setup(name='raisin.recipe.transformation',
       namespace_packages=['raisin', 'raisin.recipe'],
       include_package_data=True,
       zip_safe=False,
-      test_suite='grape.recipe.transformation.tests',
+      test_suite='raisin.recipe.transformation.tests',
       install_requires=['setuptools',
                         'zc.buildout',
                         # -*- Extra requirements: -*-
