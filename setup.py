@@ -5,7 +5,7 @@ raisin.recipe.transformation
 import os
 from setuptools import setup, find_packages
 
-version = '1.1'
+version = '1.1.1'
 
 long_description = """The raisin.recipe.transformation package is a Buildout recipe used
 for transforming data for the data warehouse of Raisin, the web application used for
