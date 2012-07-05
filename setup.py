@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 version = '1.1'
 
 long_description = """The raisin.recipe.transformation package is a Buildout recipe used
-for transforming data for the data warehouse of Raisin, the web application used for 
+for transforming data for the data warehouse of Raisin, the web application used for
 publishing the summary statistics of Grape, a pipeline used for processing and analyzing
 RNA-Seq data. In ETL terms, it transforms the extracted data before loading it into the
 data warehouse."""
