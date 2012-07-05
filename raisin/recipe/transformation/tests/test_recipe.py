@@ -4,7 +4,6 @@ Test for raisin.recipe.transformation
 
 import os
 import unittest
-import shutil
 from pkg_resources import get_provider
 
 from raisin.recipe.transformation import accessions
@@ -46,21 +45,23 @@ class RecipeTests(unittest.TestCase):
         """
         Test the experiments method
         """
-        data = {'accessions.csv':[{'project_id': 'ENCODE',
-                                   'accession_id': 'ABCD',
-                                   'species': 'Homo sapiens',
-                                   'cell':'cell',
-                                   'readType':'readType',
-                                   'type':'type',
-                                   'qualities':'qualities',
-                                   'dataType':'dataType',
-                                   'rnaExtract':'rnaExtract',
-                                   'localization':'localization',
-                                   'lab':'lab'}]}
+        data = {'accessions.csv': [{'project_id': 'ENCODE',
+                                    'accession_id': 'ABCD',
+                                    'species': 'Homo sapiens',
+                                    'cell': 'cell',
+                                    'readType': 'readType',
+                                    'type': 'type',
+                                    'qualities': 'qualities',
+                                    'dataType': 'dataType',
+                                    'rnaExtract': 'rnaExtract',
+                                    'localization': 'localization',
+                                    'lab': 'lab'}]}
         experiments.main(data, SANDBOX)
         file_path = os.path.join(SANDBOX, 'experiments.csv')
         file_content = open(file_path, 'r').read()
-        expected="""project_id\taccession_id\treplicate_id\nENCODE\tABCD\t1\n"""
+        header = "\t".join(['project_id', 'accession_id', 'replicate_id'])
+        line = "\t".join(['ENCODE', 'ABCD', '1'])
+        expected = "%s\n%s\n" % (header, line)
         self.failUnless(file_content == expected, file_content)
 
     def test_files(self):
@@ -79,50 +80,50 @@ class RecipeTests(unittest.TestCase):
         """
         Test the profiles method
         """
-        buildout = {'project_users':'anonymous'}
-        data = {'profiles.csv':[{'PROJECTID':'ENCODE',
-                                 'project_id':'ENCODE',
-                                 'ANNOTATION':'',
-                                 'GENOMESEQ':''}],
-                'annotations.csv':[{'file_location':''}],
-                'genomes.csv':[],
-                'accessions.csv':[{'project_id':'ENCODE',
-                                   'accession_id':'ABCD',
-                                   'species':'Homo sapiens',
-                                   'cell':'cell',
-                                   'readType':'readType',
-                                   'type':'type',
-                                   'qualities':'qualities',
-                                   'dataType':'dataType',
-                                   'rnaExtract':'rnaExtract',
-                                   'localization':'localization',
-                                   'lab':'lab'}]}
+        buildout = {'project_users': 'anonymous'}
+        data = {'profiles.csv': [{'PROJECTID': 'ENCODE',
+                                  'project_id': 'ENCODE',
+                                  'ANNOTATION': '',
+                                  'GENOMESEQ': ''}],
+                'annotations.csv': [{'file_location': ''}],
+                'genomes.csv': [],
+                'accessions.csv': [{'project_id': 'ENCODE',
+                                    'accession_id': 'ABCD',
+                                    'species': 'Homo sapiens',
+                                    'cell': 'cell',
+                                    'readType': 'readType',
+                                    'type': 'type',
+                                    'qualities': 'qualities',
+                                    'dataType': 'dataType',
+                                    'rnaExtract': 'rnaExtract',
+                                    'localization': 'localization',
+                                    'lab': 'lab'}]}
         profiles.main(buildout, data, SANDBOX)
 
     def test_read_length(self):
         """
         Test the read_length method
         """
-        data = {'profiles.csv':[{'PROJECTID':'ENCODE',
-                                 'project_id':'ENCODE',
-                                 'ANNOTATION':''}],
-                'annotations.csv':[{}],
-                'annotations.csv':[],
-                'accessions.csv':[{'project_id':'ENCODE',
-                                   'accession_id':'ABCD',
-                                   'species':'Homo sapiens',
-                                   'cell':'cell',
-                                   'readType': '1x70D',
-                                   'type':'type',
-                                   'qualities':'qualities',
-                                   'dataType':'dataType',
-                                   'rnaExtract':'rnaExtract',
-                                   'localization':'localization',
-                                   'lab':'lab'}],
-                'runs.csv':[{'project_id':'ENCODE',
-                             'run_id':'run_id',
-                             'read_length':70}],
-                'files.csv':[{}],
+        data = {'profiles.csv': [{'PROJECTID': 'ENCODE',
+                                  'project_id': 'ENCODE',
+                                  'ANNOTATION': ''}],
+                'annotations.csv': [{}],
+                'genomes.csv': [],
+                'accessions.csv': [{'project_id': 'ENCODE',
+                                    'accession_id': 'ABCD',
+                                    'species': 'Homo sapiens',
+                                    'cell': 'cell',
+                                    'readType': '1x70D',
+                                    'type': 'type',
+                                    'qualities': 'qualities',
+                                    'dataType': 'dataType',
+                                    'rnaExtract': 'rnaExtract',
+                                    'localization': 'localization',
+                                    'lab': 'lab'}],
+                'runs.csv': [{'project_id': 'ENCODE',
+                              'run_id': 'run_id',
+                              'read_length': 70}],
+                'files.csv': [{}],
                              }
         read_length.main(data, SANDBOX)
 
@@ -130,31 +131,31 @@ class RecipeTests(unittest.TestCase):
         """
         Test the view method
         """
-        data = {'profiles.csv':[{'PROJECTID':'ENCODE',
-                                 'project_id':'ENCODE',
-                                 'ANNOTATION':''}],
-                'annotations.csv':[{}],
-                'annotations.csv':[],
-                'accessions.csv':[{'project_id':'ENCODE',
-                                   'accession_id':'ABCD',
-                                   'species':'Homo sapiens',
-                                   'cell':'cell',
-                                   'readType': '1x70D',
-                                   'type':'type',
-                                   'qualities':'qualities',
-                                   'dataType':'dataType',
-                                   'rnaExtract':'rnaExtract',
-                                   'localization':'localization',
-                                   'lab':'lab'}],
-                'runs.csv':[{'project_id':'ENCODE',
-                             'run_id':'run_id',
-                             'read_length':70}],
-                'files.csv':[{'project_id':'ENCODE',
-                              'accession_id':'ABCD',
-                              'type':'fastq',
-                              'file_location':'myfile.fastq.gz'
-                              }],
-                             }
+        data = {'profiles.csv': [{'PROJECTID': 'ENCODE',
+                                  'project_id': 'ENCODE',
+                                  'ANNOTATION': ''}],
+                'annotations.csv': [{}],
+                'genomes.csv': [],
+                'accessions.csv': [{'project_id': 'ENCODE',
+                                    'accession_id': 'ABCD',
+                                    'species': 'Homo sapiens',
+                                    'cell': 'cell',
+                                    'readType': '1x70D',
+                                    'type': 'type',
+                                    'qualities': 'qualities',
+                                    'dataType': 'dataType',
+                                    'rnaExtract': 'rnaExtract',
+                                    'localization': 'localization',
+                                    'lab': 'lab'}],
+                'runs.csv': [{'project_id': 'ENCODE',
+                              'run_id': 'run_id',
+                              'read_length': 70}],
+                'files.csv': [{'project_id': 'ENCODE',
+                               'accession_id': 'ABCD',
+                               'type': 'fastq',
+                               'file_location': 'myfile.fastq.gz'
+                               }],
+                }
         view.main(data, SANDBOX)
 
 

@@ -20,7 +20,8 @@ def read_length(accession):
     if read_length.isdigit():
         return read_length
     else:
-        raise AttributeError("Read length parsing of 'readType' failed: %s" % read_length)
+        message = "Read length parsing of 'readType' failed: %s" % read_length
+        raise AttributeError(message)
     return read_length
 
 
@@ -31,6 +32,7 @@ def get_accessions(data):
                accession['accession_id'])
         accessions[key] = accession
     return accessions
+
 
 def get_runs(data):
     runs = {}

@@ -38,6 +38,7 @@ def detect_missing_annotation(buildout, data):
         message = "\n".join(message)
         logger.info(message)
 
+
 def detect_missing_genomes(buildout, data):
     """
     Go through all profiles and check whether the genome is defined
@@ -77,4 +78,3 @@ def detect_missing_genomes(buildout, data):
 def main(buildout, data, workspace):
     detect_missing_annotation(buildout, data)
     detect_missing_genomes(buildout, data)
-
