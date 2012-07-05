@@ -29,7 +29,7 @@ class RecipeTests(unittest.TestCase):
 
     def setUp(self):  # pylint: disable=C0103
         pass
-        
+
     def test_accessions(self):
         """
         Test the accessions method
@@ -41,7 +41,7 @@ class RecipeTests(unittest.TestCase):
         Test the annotations method
         """
         self.failUnless(annotations.main(data=None, workspace=None) == None)
-        
+
     def test_experiments(self):
         """
         Test the experiments method
@@ -62,7 +62,7 @@ class RecipeTests(unittest.TestCase):
         file_content = open(file_path, 'r').read()
         expected="""project_id\taccession_id\treplicate_id\nENCODE\tABCD\t1\n"""
         self.failUnless(file_content == expected, file_content)
-        
+
     def test_files(self):
         """
         Test the files method
@@ -82,9 +82,10 @@ class RecipeTests(unittest.TestCase):
         buildout = {'project_users':'anonymous'}
         data = {'profiles.csv':[{'PROJECTID':'ENCODE',
                                  'project_id':'ENCODE',
-                                 'ANNOTATION':''}],
-                'annotations.csv':[{}],
-                'annotations.csv':[],
+                                 'ANNOTATION':'',
+                                 'GENOMESEQ':''}],
+                'annotations.csv':[{'file_location':''}],
+                'genomes.csv':[],
                 'accessions.csv':[{'project_id':'ENCODE',
                                    'accession_id':'ABCD',
                                    'species':'Homo sapiens',
@@ -96,7 +97,7 @@ class RecipeTests(unittest.TestCase):
                                    'rnaExtract':'rnaExtract',
                                    'localization':'localization',
                                    'lab':'lab'}]}
-        self.failUnlessRaises(AttributeError, profiles.main, buildout, data, SANDBOX)
+        profiles.main(buildout, data, SANDBOX)
 
     def test_read_length(self):
         """
