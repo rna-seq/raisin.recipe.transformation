@@ -15,6 +15,8 @@ def detect_missing_annotation(data):
     missing = {}
     for profile in data['profiles.csv']:
         annotation = profile['ANNOTATION']
+        if not annotation.strip():
+            continue
         if not annotation in annotation_files:
             if annotation in missing:
                 missing[annotation].append(profile)
@@ -51,6 +53,8 @@ def detect_missing_genomes(data):
     missing = {}
     for profile in data['profiles.csv']:
         genome = profile['GENOMESEQ']
+        if not genome.strip():
+            continue
         if not genome in genome_files:
             if genome in missing:
                 missing[genome].append(profile)
