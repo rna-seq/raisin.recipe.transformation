@@ -3,7 +3,7 @@ import logging
 logger = logging.getLogger('raisin.recipe.transformation.profiles')
 
 
-def detect_missing_annotation(buildout, data):
+def detect_missing_annotation(data):
     """
     Go through all profiles and check whether the annotation is defined
     in annotations/db.cfg.
@@ -39,7 +39,7 @@ def detect_missing_annotation(buildout, data):
         logger.info(message)
 
 
-def detect_missing_genomes(buildout, data):
+def detect_missing_genomes(data):
     """
     Go through all profiles and check whether the genome is defined
     in genomes/db.cfg.
@@ -75,6 +75,6 @@ def detect_missing_genomes(buildout, data):
         logger.info(message)
 
 
-def main(buildout, data, workspace):
-    detect_missing_annotation(buildout, data)
-    detect_missing_genomes(buildout, data)
+def main(data):
+    detect_missing_annotation(data)
+    detect_missing_genomes(data)

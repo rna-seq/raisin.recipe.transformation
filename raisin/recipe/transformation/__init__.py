@@ -46,7 +46,7 @@ class Recipe(object):
         annotations.main(data, staging)
         files.main(data, staging)
         genomes.main(data, staging)
-        profiles.main(self.buildout, data, staging)
+        profiles.main(data)
         experiments.main(data, staging)
         read_length.main(data, staging)
         view.main(data, staging)

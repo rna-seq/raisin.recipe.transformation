@@ -80,7 +80,6 @@ class RecipeTests(unittest.TestCase):
         """
         Test the profiles method
         """
-        buildout = {'project_users': 'anonymous'}
         data = {'profiles.csv': [{'PROJECTID': 'ENCODE',
                                   'project_id': 'ENCODE',
                                   'ANNOTATION': '',
@@ -98,7 +97,7 @@ class RecipeTests(unittest.TestCase):
                                     'rnaExtract': 'rnaExtract',
                                     'localization': 'localization',
                                     'lab': 'lab'}]}
-        profiles.main(buildout, data, SANDBOX)
+        profiles.main(data)
 
     def test_read_length(self):
         """

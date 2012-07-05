@@ -11,18 +11,18 @@ def read_length(accession):
     2x96, 2x53, 2x76, 2x46, 2x35, 2x34, 100, 2x40, 2x50, 2x51
     2x54, 2x49, 2x36, 1x36, 2x37, 50, 75
     """
-    read_length = accession['readType']
-    if 'D' in read_length:
-        read_length = read_length.split('D')[0]
-    if  'x' in read_length:
+    length = accession['readType']
+    if 'D' in length:
+        length = length.split('D')[0]
+    if  'x' in length:
         # Extract the read length taking the value after the x
-        read_length = read_length.split('x')[1]
-    if read_length.isdigit():
-        return read_length
+        length = length.split('x')[1]
+    if length.isdigit():
+        return length
     else:
-        message = "Read length parsing of 'readType' failed: %s" % read_length
+        message = "Read length parsing of 'readType' failed: %s" % length
         raise AttributeError(message)
-    return read_length
+    return length
 
 
 def get_accessions(data):
@@ -45,26 +45,26 @@ def get_runs(data):
 
 def main(data, workspace):
     path = os.path.join(workspace, "read_length.csv")
-    file = open(path, "w")
+    read_length_file = open(path, "w")
     headers = ["project_id",
                "accession_id",
                "run_id",
                "read_length"]
-    file.write("\t".join(headers))
-    file.write("\n")
+    read_length_file.write("\t".join(headers))
+    read_length_file.write("\n")
 
     accessions = get_accessions(data)
     runs = get_runs(data)
 
     # Update run_id when going through the accessions
     for key, accession in accessions.items():
-        project_id, accession_id = key
+        accession_id = key[1]
         if key in runs:
             accession['run_id'] = accession_id
 
     # Update accession_id when going through the runs
     for key, run in runs.items():
-        project_id, run_id = key
+        run_id = key[1]
         if key in accessions:
             run['accession_id'] = run_id
 
@@ -86,6 +86,6 @@ def main(data, workspace):
     for result in results:
         if result[1] and result[2] and result[1] != result[2]:
             print result
-        file.write("%s\t%s\t%s\t%s\n" % result)
+        read_length_file.write("%s\t%s\t%s\t%s\n" % result)
 
-    file.close()
+    read_length_file.close()
