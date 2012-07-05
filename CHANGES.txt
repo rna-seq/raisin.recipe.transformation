@@ -1,2 +1,4 @@
+- No more error when no genome or annotation is given. Just a log message.
+
 - by default, project users is now anonymous, so code checking for this
   setting has been removed
