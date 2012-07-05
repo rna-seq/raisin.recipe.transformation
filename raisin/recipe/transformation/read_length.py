@@ -44,8 +44,8 @@ def get_runs(data):
 def main(data, workspace):
     path = os.path.join(workspace, "read_length.csv")
     file = open(path, "w")
-    headers = ["project_id", 
-               "accession_id", 
+    headers = ["project_id",
+               "accession_id",
                "run_id",
                "read_length"]
     file.write("\t".join(headers))
@@ -59,7 +59,7 @@ def main(data, workspace):
         project_id, accession_id = key
         if key in runs:
             accession['run_id'] = accession_id
-    
+
     # Update accession_id when going through the runs
     for key, run in runs.items():
         project_id, run_id = key
@@ -80,7 +80,7 @@ def main(data, workspace):
 
     results = list(results)
     results.sort()
-    
+
     for result in results:
         if result[1] and result[2] and result[1] != result[2]:
             print result
